@@ -5,7 +5,7 @@ dotenv.config();
 export default {
   schema: './src/db/schemas.ts',
   out: './src/db/migrations',
-  driver: 'pg',
+  dialect: 'postgresql',
   dbCredentials: {
     host: process.env.DB_HOST!,
     port: parseInt(process.env.DB_PORT!),
