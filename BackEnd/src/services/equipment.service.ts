@@ -15,21 +15,6 @@ export interface EquipmentFilters {
 export class EquipmentService {
   // Récupérer tous les équipements avec filtres
   async getAll(filters: EquipmentFilters = {}): Promise<EquipmentWithType[]> {
-    let query = db
-      .select({
-        id: equipments.id,
-        name: equipments.name,
-        equipmentTypeId: equipments.equipmentTypeId,
-        brand: equipments.brand,
-        model: equipments.model,
-        description: equipments.description,
-        createdAt: equipments.createdAt,
-        updatedAt: equipments.updatedAt,
-        equipmentType: equipmentTypes,
-      })
-      .from(equipments)
-      .leftJoin(equipmentTypes, eq(equipments.equipmentTypeId, equipmentTypes.id));
-
     // Appliquer les filtres
     const conditions: SQL[] = [];
 
@@ -40,7 +25,7 @@ export class EquipmentService {
         ilike(equipments.model, `%${filters.search}%`)
       ].filter((c): c is SQL => c !== undefined);
       if (searchConditions.length > 0) {
-        conditions.push;
+        conditions.push();
       }
     }
 

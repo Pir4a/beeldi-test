@@ -2,7 +2,8 @@ import { pgTable, uuid, varchar, timestamp, text, integer } from 'drizzle-orm/pg
 import { relations } from 'drizzle-orm';
 
 // Table des types d'équipements (hiérarchique)
-export const equipmentTypes = pgTable('equipment_types', {
+
+export const equipmentTypes: any = pgTable('equipment_types', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name', { length: 255 }).notNull(),
   parentId: uuid('parent_id').references(() => equipmentTypes.id),
@@ -10,7 +11,6 @@ export const equipmentTypes = pgTable('equipment_types', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
-
 // Table des équipements
 export const equipments = pgTable('equipments', {
   id: uuid('id').primaryKey().defaultRandom(),
