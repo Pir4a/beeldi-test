@@ -1,38 +1,38 @@
 # beeldi-test
 
-- [ ] L'application doit permettre de gérer un inventaire d'équipements.
+- [x] L'application doit permettre de gérer un inventaire d'équipements.
 
 Un équipement est défini par :
 
-    - [x ] Un identifiant unique
-    - [x ] Une précision sur le nom de l'équipement
-    - [x ] Un type d'équipement (ex: ascenseur électrique, chaudière gaz murale, etc.)
-    - [x ] Une marque (ex: Schindler, Thyssenkrupp, etc.)
-    - [x ] Un modèle
-    - [x ] Une date de création
+    - [x] Un identifiant unique
+    - [x] Une précision sur le nom de l'équipement
+    - [x] Un type d'équipement (ex: ascenseur électrique, chaudière gaz murale, etc.)
+    - [x] Une marque (ex: Schindler, Thyssenkrupp, etc.)
+    - [x] Un modèle
+    - [x] Une date de création
     - [ ] Une date de modification
 
 Un type d'équipement est défini par :
 
-    - [x ] Un identifiant unique
-    - [x ] Un nom
-    - [x ] Un parent (null pour les domaines)
+    - [x] Un identifiant unique
+    - [x] Un nom
+    - [x] Un parent (null pour les domaines)
 
 - [ ] Un type d'équipement organisé en maximum 4 niveaux hiérarchiques.
 
 Exemples de type d'équipement :
 
-    - [x ] LEVAGE ET MANUTENTION ( domaine )
+    - [x] LEVAGE ET MANUTENTION ( domaine )
         - [ ] Ascenseur ( type )
             - [ ] Ascenseur Électrique ( catégorie )
                 - [ ] Ascenseur électrique à traction ( sous-catégorie )
 
-    - x[ ] CHAUFFAGE ( domaine )
+    - [x] CHAUFFAGE ( domaine )
         - [ ] Chaudière ( type )
             - [ ] Chaudière gaz ( catégorie )
                 - [ ] Chaudière gaz murale ( sous-catégorie )
 
-    - x[ ] SÉCURITÉ ( domaine )
+    - [x] SÉCURITÉ ( domaine )
         - [ ] Détection incendie ( type )
             - [ ] Détecteur de fumée ( catégorie )
                 - [ ] Détecteur optique de fumée ( sous-catégorie )
@@ -45,7 +45,7 @@ Exemples de type d'équipement :
 
 ## Mutations
 
-    - [x ] Créer un équipement : Validation des données
+    - [x] Créer un équipement : Validation des données
     - [ ] Modifier un équipement : Mise à jour partielle ou complète des champs
     - [ ] Supprimer un équipement : Suppression logique ou physique
 
