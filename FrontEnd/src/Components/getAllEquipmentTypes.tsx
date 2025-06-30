@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import useEquipmentsTypes from '../contexts/EquipmentTypesProvider';
 
-interface EquipmentType {
-  id: string;
-  name: string;
-  parentId?: string | null;
-  level: number;
-  createdAt: string;
-  updatedAt: string;
-}
+// interface EquipmentType {
+//   id: string;
+//   name: string;
+//   parentId?: string | null;
+//   level: number;
+//   createdAt: string;
+//   updatedAt: string;
+// }
 
 function GetAllEquipmentTypes() {
-  const [equipmentTypes, setEquipmentTypes] = useState<EquipmentType[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // const [equipmentTypes, setEquipmentTypes] = useState<EquipmentType[]>([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
+    const equipmentTypes = useEquipmentsTypes()
+  // useEffect(() => {
+  //   const fetchEquipmentTypes = async () => {
+  //     setLoading(true);
+  //     setError(null);
+  //     try {
+  //       const res = await fetch('http://localhost:3001/api/equipment-types');
+  //       if (!res.ok) throw new Error('Failed to fetch equipment types');
+  //       const data = await res.json();
+  //       setEquipmentTypes(data);
+  //     } catch (err) {
+  //       setError(err instanceof Error ? err.message : 'Unknown error');
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchEquipmentTypes();
+  // }, []);
 
-  useEffect(() => {
-    const fetchEquipmentTypes = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await fetch('http://localhost:3001/api/equipment-types');
-        if (!res.ok) throw new Error('Failed to fetch equipment types');
-        const data = await res.json();
-        setEquipmentTypes(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchEquipmentTypes();
-  }, []);
-
-  if (loading) return <div>Loading equipment types...</div>;
-  if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
+  // if (loading) return <div>Loading equipment types...</div>;
+  // if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
 
   
 
