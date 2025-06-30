@@ -35,6 +35,8 @@ function GetAllEquipmentTypes() {
   if (loading) return <div>Loading equipment types...</div>;
   if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
 
+  
+
   return (
     <div>
       <h2>All Equipment Types</h2>

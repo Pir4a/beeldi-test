@@ -1,44 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import useEquipments from '../contexts/EquipmentProvider';
 
-interface Equipment {
-  id: string;
-  name: string;
-  equipmentTypeId: string;
-  brand?: string;
-  model?: string;
-  description?: string;
-  createdAt: string;
-  updatedAt: string;
-}
+
 
 function GetAllEquipments() {
-  const [equipments, setEquipments] = useState<Equipment[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+ // const [equipments, setEquipments] = useState<Equipment[]>([]);
+  //const [loading, setLoading] = useState(true);
+  //const [error, setError] = useState<string | null>(null);
+  const equipments = useEquipments()
 
-  useEffect(() => {
-    const fetchEquipments = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await fetch('http://localhost:3001/api/equipments');
-        if (!res.ok) throw new Error('Failed to fetch equipments');
-        const data = await res.json();
-        setEquipments(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchEquipments();
-  }, []);
 
-  if (loading) return <div>Loading equipments...</div>;
-  if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
+  // useEffect(() => {
+  //   const fetchEquipments = async () => {
+  //     setLoading(true);
+  //     setError(null);
+  //     try {
+  //       const res = await fetch('http://localhost:3001/api/equipments');
+  //       if (!res.ok) throw new Error('Failed to fetch equipments');
+  //       const data = await res.json();
+  //       setEquipments(data);
+  //     } catch (err) {
+  //       setError(err instanceof Error ? err.message : 'Unknown error');
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchEquipments();
+  // }, []);
+
+  // if (loading) return <div>Loading equipments...</div>;
+  // if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
 
   return (
     <div>
+      <button onClick={()=>console.log(equipments)}></button>
       <h2>All Equipments</h2>
       {equipments.length === 0 ? (
         <div>No equipments found.</div>
