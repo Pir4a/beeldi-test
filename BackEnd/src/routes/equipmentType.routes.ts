@@ -27,8 +27,4 @@ router.put('/:id', equipmentTypeController.update);
 
 // Delete equipment type
 router.delete('/:id', equipmentTypeController.delete);
-
-// Import equipment types from CSV
-router.post('/import', equipmentTypeController.importFromCSV);
-
 export default router;

@@ -81,7 +81,7 @@ function TestPost() {
         setSelectedLevel2('');
         setSelectedLevel3('');
         setSelectedLevel4('');
-        setEquipmentTypeId(''); // reset
+        setEquipmentTypeId(e.target.value); // reset
       }}
     >
       <option value="">Select Domaine</option>
@@ -101,7 +101,7 @@ function TestPost() {
           setSelectedLevel2(e.target.value);
           setSelectedLevel3('');
           setSelectedLevel4('');
-          setEquipmentTypeId(''); // reset
+          setEquipmentTypeId(e.target.value); // reset
         }}
       >
         <option value="">Select Type</option>
@@ -121,7 +121,7 @@ function TestPost() {
         onChange={e => {
           setSelectedLevel3(e.target.value);
           setSelectedLevel4('');
-          setEquipmentTypeId(''); // reset
+          setEquipmentTypeId(e.target.value); // reset
         }}
       >
         <option value="">Select Catégorie</option>

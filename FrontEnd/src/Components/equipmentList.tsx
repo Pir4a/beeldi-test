@@ -196,7 +196,7 @@ export default function EquipmentList() {
       <div className='w-4/5 pt-8 grid grid-cols-2 place-items-center gap-6 mb-6 max-w-[1000px]'>
         {LEVELS.map(({ label, value }) => (
           <div key={value} className='min-w-[500px] flex items-center justify-end'>
-            <label style={{ fontWeight: 600 }}>{label}: </label>
+            <label className="font-semibold">{label}: </label>
             <select
               value={filters[value]}
               onChange={(e) => setFilters((f) => ({ ...f, [value]: e.target.value }))}
@@ -214,17 +214,17 @@ export default function EquipmentList() {
         
       </div>
       <div className='flex w-4/5 items-center flex-col justify-center mx-auto'>
-          <label style={{ fontWeight: 600 }}>Search Name/Domain: </label>
+          <label className="font-semibold">Search Name/Domain: </label>
           <input
             type='text'
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder='Search...'
-            style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', minWidth: 180 }}
+            className="p-1.5 rounded border border-gray-400 min-w-[180px]"
           />
         </div>
       <div className='w-4/5 pt-8'>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 16 }}>
+        <table className="w-full border-collapse text-base">
           <thead>
             <tr className="bg-[#242424] text-white font-semibold border-b border-gray-300">
               <th className='p-2'>Name</th>
@@ -241,7 +241,9 @@ export default function EquipmentList() {
           <tbody>
             {filteredEquipments.length === 0 ? (
               <tr>
-                <td colSpan={9} style={{ textAlign: 'center', padding: 24, color: '#888' }}>No equipments found.</td>
+                <td
+                 className=' col-span-9 text-center p-6 color-[#888]'
+                 >No equipments found.</td>
               </tr>
             ) : (
               filteredEquipments.map((eq) => {
@@ -250,7 +252,7 @@ export default function EquipmentList() {
                 const categorie = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 3)?.name || '';
                 const sousCategorie = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 4)?.name || '';
                 return (
-                  <tr key={eq.id} style={{ borderBottom: '1px solid #eee', transition: 'background 0.2s' }}>
+                  <tr key={eq.id} className="border-b border-[#eee] transition-colors duration-200">
                     <td className="bg-[#242424] text-white p-3">{eq.name}</td>
                     <td className="bg-[#242424] text-white p-3">{eq.model || '-'}</td>
                     <td className="bg-[#242424] text-white p-3">{eq.brand || '-'}</td>
@@ -262,13 +264,13 @@ export default function EquipmentList() {
                     <td className="bg-[#242424] text-white p-3">
                       <button
                         onClick={() => openEditModal(eq)}
-                        style={{ marginRight: 0, background: '#1976d2', width: 80, color: '#fff', border: 'none', borderRadius: 4, padding: '6px 14px', cursor: 'pointer', fontWeight: 600 }}
+                        className="w-24  border-none rounded mb-1 cursor-pointer font-semibold text-amber-200"
                         title='Edit equipment'
                       >Edit</button>
                       <button
                         onClick={() => handleDeleteEquipment(eq.id)}
                         disabled={deletingId === eq.id}
-                        style={{ background: '#d32f2f', color: '#fff',width: 80, border: 'none', borderRadius: 4, padding: '6px 14px', cursor: 'pointer', fontWeight: 600 }}
+                        className="text-white w-24 border-none rounded cursor-pointer font-semibold"
                         title='Delete equipment'
                       >{deletingId === eq.id ? 'Deleting...' : 'Delete'}</button>
                     </td>
@@ -284,49 +286,49 @@ export default function EquipmentList() {
       {showEditModal && modalEquipment && (
         <div className="fixed top-0 left-0 w-screen h-screen bg-black/70 z-50 flex items-center justify-center">
           <div className="bg-[#242424] rounded-xl p-8 min-w-[400px] shadow-2xl relative">
-            <h3 style={{ marginTop: 0, marginBottom: 24, fontWeight: 700 }}>Edit Equipment</h3>
-            <div style={{ marginBottom: 16 }}>
-              <label style={{ fontWeight: 600 }}>Name:</label>
+            <h3 className="mt-0 mb-6 font-bold">Edit Equipment</h3>
+            <div className="mb-4">
+              <label className="font-semibold">Name:</label>
               <input
                 value={modalEditEquipment.name || ''}
                 onChange={e => setModalEditEquipment(ed => ({ ...ed, name: e.target.value }))}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #bbb', marginTop: 4 }}
+                className="w-full p-2 rounded border border-gray-400 mt-1"
               />
             </div>
-            <div style={{ marginBottom: 16 }}>
-              <label style={{ fontWeight: 600 }}>Model:</label>
+            <div className="mb-4">
+              <label className="font-semibold">Model:</label>
               <input
                 value={modalEditEquipment.model || ''}
                 onChange={e => setModalEditEquipment(ed => ({ ...ed, model: e.target.value }))}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #bbb', marginTop: 4 }}
+                className="w-full p-2 rounded border border-gray-400 mt-1"
               />
             </div>
-            <div style={{ marginBottom: 16 }}>
-              <label style={{ fontWeight: 600 }}>Brand:</label>
+            <div className="mb-4">
+              <label className="font-semibold">Brand:</label>
               <input
                 value={modalEditEquipment.brand || ''}
                 onChange={e => setModalEditEquipment(ed => ({ ...ed, brand: e.target.value }))}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #bbb', marginTop: 4 }}
+                className="w-full p-2 rounded border border-gray-400 mt-1"
               />
             </div>
-            <div style={{ marginBottom: 16 }}>
-              <label style={{ fontWeight: 600 }}>Description:</label>
+            <div className="mb-4">
+              <label className="font-semibold">Description:</label>
               <textarea
                 value={modalEditEquipment.description || ''}
                 onChange={e => setModalEditEquipment(ed => ({ ...ed, description: e.target.value }))}
-                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #bbb', marginTop: 4, minHeight: 60 }}
+                className="w-full p-2 rounded border border-gray-400 mt-1 min-h-[60px]"
               />
             </div>
-            <div style={{ marginBottom: 16 }}>
-              <label style={{ fontWeight: 600 }}>Type:</label>
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 4 }}>
+            <div className="mb-4">
+              <label className="font-semibold">Type:</label>
+              <div className="flex gap-2 flex-wrap mt-1">
                 <select
                   value={modalEditChain[1]}
                   onChange={e => {
                     const v = e.target.value;
                     setModalEditChain({ 1: v, 2: '', 3: '', 4: '' });
                   }}
-                  style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', minWidth: 120 }}
+                  className="p-1.5 rounded border border-gray-400 min-w-[120px]"
                 >
                   <option value=''>Domaine</option>
                   {equipmentTypes.filter(t => t.level === 1).map(opt => (
@@ -340,7 +342,7 @@ export default function EquipmentList() {
                     setModalEditChain({ 1: modalEditChain[1], 2: v, 3: '', 4: '' });
                   }}
                   disabled={!modalEditChain[1]}
-                  style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', minWidth: 120 }}
+                  className="p-1.5 rounded border border-gray-400 min-w-[120px]"
                 >
                   <option value=''>Type</option>
                   {equipmentTypes.filter(t => t.level === 2 && t.parentId === modalEditChain[1]).map(opt => (
@@ -354,7 +356,7 @@ export default function EquipmentList() {
                     setModalEditChain({ 1: modalEditChain[1], 2: modalEditChain[2], 3: v, 4: '' });
                   }}
                   disabled={!modalEditChain[2]}
-                  style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', minWidth: 120 }}
+                  className="p-1.5 rounded border border-gray-400 min-w-[120px]"
                 >
                   <option value=''>Catégorie</option>
                   {equipmentTypes.filter(t => t.level === 3 && t.parentId === modalEditChain[2]).map(opt => (
@@ -368,7 +370,7 @@ export default function EquipmentList() {
                     setModalEditChain({ 1: modalEditChain[1], 2: modalEditChain[2], 3: modalEditChain[3], 4: v });
                   }}
                   disabled={!modalEditChain[3]}
-                  style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', minWidth: 120 }}
+                  className="p-1.5 rounded border border-gray-400 min-w-[120px]"
                 >
                   <option value=''>Sous-catégorie</option>
                   {equipmentTypes.filter(t => t.level === 4 && t.parentId === modalEditChain[3]).map(opt => (
@@ -377,19 +379,19 @@ export default function EquipmentList() {
                 </select>
               </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
+            <div className="flex justify-end gap-3">
               <button
                 onClick={saveModalEdit}
-                style={{ background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4, padding: '8px 20px', fontWeight: 600, fontSize: 16, cursor: 'pointer' }}
+                className="bg-[#1976d2] text-white border-none rounded py-2 px-5 font-semibold text-base cursor-pointer"
               >Save</button>
               <button
                 onClick={() => { setShowEditModal(false); setModalEquipment(null); setModalEditEquipment({}); setModalEditChain({ 1: '', 2: '', 3: '', 4: '' }); }}
-                style={{ background: '#888', color: '#fff', border: 'none', borderRadius: 4, padding: '8px 20px', fontWeight: 600, fontSize: 16, cursor: 'pointer' }}
+                className="bg-[#888] text-white border-none rounded py-2 px-5 font-semibold text-base cursor-pointer"
               >Cancel</button>
             </div>
             <button
               onClick={() => { setShowEditModal(false); setModalEquipment(null); setModalEditEquipment({}); setModalEditChain({ 1: '', 2: '', 3: '', 4: '' }); }}
-              style={{ position: 'absolute', top: 12, right: 16, background: 'none', border: 'none', fontSize: 24, color: '#888', cursor: 'pointer' }}
+              className="absolute top-3 right-4 bg-transparent border-none text-2xl text-gray-400 cursor-pointer"
               title='Close'
             >×</button>
           </div>
@@ -399,31 +401,61 @@ export default function EquipmentList() {
       {/* Equipment Types Table for Deletion/Editing */}
       <h3 className='mt-12 font-bold text-2xl'>Equipment Types</h3>
       <div className="bg-[#242424] rounded-xl shadow-lg p-6 mt-3">
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 16 }}>
+        <table className="w-full border-collapse text-base">
           <thead>
-            <tr style={{ background: '#242424', fontWeight: 700 }}>
-              <th style={{ padding: 10 }}>Name</th>
-              <th style={{ padding: 10 }}>Level</th>
-              <th style={{ padding: 10 }}>Parent</th>
-              <th style={{ padding: 10 }}>Actions</th>
+            <tr className="bg-[#242424] font-bold">
+              <th className="p-2.5">Name</th>
+              <th className="p-2.5">Level</th>
+              <th className="p-2.5">Parent</th>
+              <th className="p-2.5">Actions</th>
             </tr>
           </thead>
           <tbody>
             {equipmentTypes.length === 0 ? (
               <tr>
-                <td colSpan={4} style={{ textAlign: 'center', padding: 24, color: '#888' }}>No equipment types found.</td>
+                <td colSpan={4} className="text-center p-6 text-gray-400">No equipment types found.</td>
               </tr>
             ) : (
               paginatedEquipmentTypes.map((type) => {
                 const isEditing = editingTypeId === type.id;
                 return (
-                  <tr key={type.id} style={{ borderBottom: '1px solid #eee', transition: 'background 0.2s' }}>
-                    <td className="bg-[#242424] text-white p-3">{type.name}</td>
-                    <td className="bg-[#242424] text-white p-3">{LEVELS.find(l => l.value === type.level)?.label || type.level}</td>
-                    <td className="bg-[#242424] text-white p-3">{getTypeByLevel(equipmentTypes, type.parentId || '', type.level - 1)?.name || 'None'}</td>
-                    <td className="bg-[#242424] text-white p-3">
-                      {isEditing ? (
-                        <>
+                  <tr key={type.id} className="border-b border-[#eee] transition-colors duration-200">
+                    {isEditing ? (
+                      <>
+                        <td className="bg-[#242424] text-white p-3">
+                          <input
+                            value={editEquipmentType.name || ''}
+                            onChange={e => setEditEquipmentType(ed => ({ ...ed, name: e.target.value }))}
+                            className="w-full p-1 rounded border border-gray-400"
+                          />
+                        </td>
+                        <td className="bg-[#242424] text-white p-3">
+                          <select
+                            value={editEquipmentType.level || type.level}
+                            onChange={e => setEditEquipmentType(ed => ({ ...ed, level: Number(e.target.value) }))}
+                            className="w-full p-1 rounded border border-gray-400"
+                          >
+                            {LEVELS.map(lvl => (
+                              <option key={lvl.value} value={lvl.value}>{lvl.label}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="bg-[#242424] text-white p-3">
+                          <select
+                            value={editEquipmentType.parentId || ''}
+                            onChange={e => setEditEquipmentType(ed => ({ ...ed, parentId: e.target.value }))}
+                            className="w-full p-1 rounded border border-gray-400"
+                            disabled={(editEquipmentType.level || type.level) === 1}
+                          >
+                            <option value="">None</option>
+                            {equipmentTypes
+                              .filter(t => t.level === ((editEquipmentType.level || type.level) - 1))
+                              .map(opt => (
+                                <option key={opt.id} value={opt.id}>{opt.name}</option>
+                              ))}
+                          </select>
+                        </td>
+                        <td className="bg-[#242424] text-white p-3">
                           <button
                             onClick={saveEditEquipmentType}
                             className="w-[100px] bg-red-50"
@@ -432,23 +464,28 @@ export default function EquipmentList() {
                             onClick={() => { setEditingTypeId(null); setEditEquipmentType({}); }}
                             className="w-[100px] bg-gray-500"
                           >Cancel</button>
-                        </>
-                      ) : (
-                        <>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td className="bg-[#242424] text-white p-3">{type.name}</td>
+                        <td className="bg-[#242424] text-white p-3">{LEVELS.find(l => l.value === type.level)?.label || type.level}</td>
+                        <td className="bg-[#242424] text-white p-3">{getTypeByLevel(equipmentTypes, type.parentId || '', type.level - 1)?.name || 'None'}</td>
+                        <td className="bg-[#242424] text-white p-3">
                           <button
-                            className='w-[100px] bg-blue-300 mx-auto '
+                            className='w-[100px] mx-auto text-amber-200'
                             onClick={() => startEditEquipmentType(type)}
                             title='Edit type'
                           >Edit</button>
                           <button
                             onClick={() => handleDeleteEquipmentType(type.id)}
                             disabled={deletingTypeId === type.id}
-                            className="w-[100px] bg-red-500 mx-auto"
+                            className="w-[100px] bg-[red] mx-auto"
                             title='Delete type'
                           >{deletingTypeId === type.id ? 'Deleting...' : 'Delete'}</button>
-                        </>
-                      )}
-                    </td>
+                        </td>
+                      </>
+                    )}
                   </tr>
                 );
               })
