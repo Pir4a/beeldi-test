@@ -23,21 +23,21 @@ Un type d'équipement est défini par :
 Exemples de type d'équipement :
 
     - [x] LEVAGE ET MANUTENTION ( domaine )
-        - [ ] Ascenseur ( type )
-            - [ ] Ascenseur Électrique ( catégorie )
-                - [ ] Ascenseur électrique à traction ( sous-catégorie )
+        - [x] Ascenseur ( type )
+            - [x] Ascenseur Électrique ( catégorie )
+                - [x] Ascenseur électrique à traction ( sous-catégorie )
 
     - [x] CHAUFFAGE ( domaine )
-        - [ ] Chaudière ( type )
-            - [ ] Chaudière gaz ( catégorie )
-                - [ ] Chaudière gaz murale ( sous-catégorie )
+        - [x] Chaudière ( type )
+            - [x] Chaudière gaz ( catégorie )
+                - [x] Chaudière gaz murale ( sous-catégorie )
 
     - [x] SÉCURITÉ ( domaine )
-        - [ ] Détection incendie ( type )
-            - [ ] Détecteur de fumée ( catégorie )
-                - [ ] Détecteur optique de fumée ( sous-catégorie )
-            - [ ] Centrale d'alarme ( catégorie )
-                - [ ] Centrale d'alarme incendie conventionnelle ( sous-catégorie )
+        - [x] Détection incendie ( type )
+            - [x] Détecteur de fumée ( catégorie )
+                - [x] Détecteur optique de fumée ( sous-catégorie )
+            - [x] Centrale d'alarme ( catégorie )
+                - [x] Centrale d'alarme incendie conventionnelle ( sous-catégorie )
 
 - [ ] Un CSV est fourni avec plusieurs exemples de types d'équipements.
 
@@ -53,7 +53,7 @@ Exemples de type d'équipement :
 
     - [ ] Lister les équipements :
         - [x] Tableau d'équipements avec les colonnes : nom, domaine, type, catégorie, sous-catégorie, marque, modèle
-        - [ ] Filtrage par domaine, type, catégorie ou sous-catégorie
+        - [x] Filtrage par domaine, type, catégorie ou sous-catégorie
         - [ ] Recherche par marque/modèle
     - [x] Formulaire de création/édition :
         - [x] Sélection hiérarchique du type d'équipement (dropdowns en cascade)
