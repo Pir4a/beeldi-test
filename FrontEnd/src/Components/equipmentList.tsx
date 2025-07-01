@@ -77,6 +77,20 @@ export default function EquipmentList() {
   const [modalEditEquipment, setModalEditEquipment] = useState<Partial<Equipment>>({});
   const [modalEditChain, setModalEditChain] = useState<Record<number, string>>({ 1: '', 2: '', 3: '', 4: '' });
 
+  // Pagination for equipment types
+  const [typesPage, setTypesPage] = useState(1);
+  const TYPES_PER_PAGE = 15;
+  const paginatedEquipmentTypes = useMemo(() => {
+    const start = (typesPage - 1) * TYPES_PER_PAGE;
+    return equipmentTypes.slice(start, start + TYPES_PER_PAGE);
+  }, [equipmentTypes, typesPage]);
+  const totalTypesPages = Math.ceil(equipmentTypes.length / TYPES_PER_PAGE);
+
+  // Calculate page range for pagination (5 at a time)
+  const PAGE_RANGE = 5;
+  const currentRangeStart = Math.floor((typesPage - 1) / PAGE_RANGE) * PAGE_RANGE + 1;
+  const currentRangeEnd = Math.min(currentRangeStart + PAGE_RANGE - 1, totalTypesPages);
+
   // Delete equipment
   const handleDeleteEquipment = async (id: string) => {
     if (!window.confirm('Are you sure you want to delete this equipment? This action cannot be undone.')) return;
@@ -177,16 +191,16 @@ export default function EquipmentList() {
   }, [equipmentTypes]);
 
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto', padding: 24 }}>
-      <h2 style={{ fontWeight: 700, fontSize: 28, marginBottom: 24 }}>Equipment List</h2>
-      <div style={{ display: 'flex', gap: 24, marginBottom: 24, alignItems: 'flex-end' }}>
+    <div className='max-w-[1200px] mx-auto p-6'>
+      <h2 className='font-bold text-3xl pb-6'>Equipment List</h2>
+      <div className='w-4/5 pt-8 grid grid-cols-2 place-items-center gap-6 mb-6 max-w-[1000px]'>
         {LEVELS.map(({ label, value }) => (
-          <div key={value}>
+          <div key={value} className='min-w-[500px] flex items-center justify-end'>
             <label style={{ fontWeight: 600 }}>{label}: </label>
             <select
               value={filters[value]}
               onChange={(e) => setFilters((f) => ({ ...f, [value]: e.target.value }))}
-              style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', minWidth: 120 }}
+              className='w-[250px] border border-gray-300 rounded-md p-2'
             >
               <option value=''>All</option>
               {filterOptions[value].map((opt) => (
@@ -197,7 +211,9 @@ export default function EquipmentList() {
             </select>
           </div>
         ))}
-        <div>
+        
+      </div>
+      <div className='flex w-4/5 items-center flex-col justify-center mx-auto'>
           <label style={{ fontWeight: 600 }}>Search Name/Domain: </label>
           <input
             type='text'
@@ -207,20 +223,19 @@ export default function EquipmentList() {
             style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', minWidth: 180 }}
           />
         </div>
-      </div>
-      <div style={{ background: '#fff', borderRadius: 12, boxShadow: '0 2px 12px #0001', padding: 24 }}>
+      <div className='w-4/5 pt-8'>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 16 }}>
           <thead>
-            <tr style={{ background: '#f5f5f5', fontWeight: 700 }}>
-              <th style={{ padding: 10 }}>Name</th>
-              <th style={{ padding: 10 }}>Model</th>
-              <th style={{ padding: 10 }}>Brand</th>
-              <th style={{ padding: 10 }}>Description</th>
-              <th style={{ padding: 10 }}>Domaine</th>
-              <th style={{ padding: 10 }}>Type</th>
-              <th style={{ padding: 10 }}>Catégorie</th>
-              <th style={{ padding: 10 }}>Sous-catégorie</th>
-              <th style={{ padding: 10 }}>Actions</th>
+            <tr className="bg-[#242424] text-white font-semibold border-b border-gray-300">
+              <th className='p-2'>Name</th>
+              <th className='p-2'>Model</th>
+              <th className='p-2'>Brand</th>
+              <th className='p-2'>Description</th>
+              <th className='p-2'>Domaine</th>
+              <th className='p-2'>Type</th>
+              <th className='p-2'>Catégorie</th>
+              <th className='p-2'>Sous-catégorie</th>
+              <th className='p-2'>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -236,15 +251,15 @@ export default function EquipmentList() {
                 const sousCategorie = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 4)?.name || '';
                 return (
                   <tr key={eq.id} style={{ borderBottom: '1px solid #eee', transition: 'background 0.2s' }}>
-                    <td style={{ padding: 10 }}>{eq.name}</td>
-                    <td style={{ padding: 10 }}>{eq.model || '-'}</td>
-                    <td style={{ padding: 10 }}>{eq.brand || '-'}</td>
-                    <td style={{ padding: 10 }}>{eq.description || '-'}</td>
-                    <td style={{ padding: 10 }}>{domain}</td>
-                    <td style={{ padding: 10 }}>{type}</td>
-                    <td style={{ padding: 10 }}>{categorie}</td>
-                    <td style={{ padding: 10 }}>{sousCategorie}</td>
-                    <td style={{ padding: 10 }}>
+                    <td className="bg-[#242424] text-white p-3">{eq.name}</td>
+                    <td className="bg-[#242424] text-white p-3">{eq.model || '-'}</td>
+                    <td className="bg-[#242424] text-white p-3">{eq.brand || '-'}</td>
+                    <td className="bg-[#242424] text-white p-3">{eq.description || '-'}</td>
+                    <td className="bg-[#242424] text-white p-3">{domain}</td>
+                    <td className="bg-[#242424] text-white p-3">{type}</td>
+                    <td className="bg-[#242424] text-white p-3">{categorie}</td>
+                    <td className="bg-[#242424] text-white p-3">{sousCategorie}</td>
+                    <td className="bg-[#242424] text-white p-3">
                       <button
                         onClick={() => openEditModal(eq)}
                         style={{ marginRight: 0, background: '#1976d2', width: 80, color: '#fff', border: 'none', borderRadius: 4, padding: '6px 14px', cursor: 'pointer', fontWeight: 600 }}
@@ -267,8 +282,8 @@ export default function EquipmentList() {
 
       {/* Edit Modal */}
       {showEditModal && modalEquipment && (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: '#0007', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ background: '#fff', borderRadius: 12, padding: 32, minWidth: 400, boxShadow: '0 4px 24px #0002', position: 'relative' }}>
+        <div className="fixed top-0 left-0 w-screen h-screen bg-black/70 z-50 flex items-center justify-center">
+          <div className="bg-[#242424] rounded-xl p-8 min-w-[400px] shadow-2xl relative">
             <h3 style={{ marginTop: 0, marginBottom: 24, fontWeight: 700 }}>Edit Equipment</h3>
             <div style={{ marginBottom: 16 }}>
               <label style={{ fontWeight: 600 }}>Name:</label>
@@ -382,11 +397,11 @@ export default function EquipmentList() {
       )}
 
       {/* Equipment Types Table for Deletion/Editing */}
-      <h3 style={{ marginTop: 48, fontWeight: 700, fontSize: 22 }}>Equipment Types</h3>
-      <div style={{ background: '#fff', borderRadius: 12, boxShadow: '0 2px 12px #0001', padding: 24, marginTop: 12 }}>
+      <h3 className='mt-12 font-bold text-2xl'>Equipment Types</h3>
+      <div className="bg-[#242424] rounded-xl shadow-lg p-6 mt-3">
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 16 }}>
           <thead>
-            <tr style={{ background: '#f5f5f5', fontWeight: 700 }}>
+            <tr style={{ background: '#242424', fontWeight: 700 }}>
               <th style={{ padding: 10 }}>Name</th>
               <th style={{ padding: 10 }}>Level</th>
               <th style={{ padding: 10 }}>Parent</th>
@@ -399,77 +414,36 @@ export default function EquipmentList() {
                 <td colSpan={4} style={{ textAlign: 'center', padding: 24, color: '#888' }}>No equipment types found.</td>
               </tr>
             ) : (
-              equipmentTypes.map((type) => {
+              paginatedEquipmentTypes.map((type) => {
                 const isEditing = editingTypeId === type.id;
                 return (
                   <tr key={type.id} style={{ borderBottom: '1px solid #eee', transition: 'background 0.2s' }}>
-                    <td style={{ padding: 10 }}>
-                      {isEditing ? (
-                        <input
-                          value={editEquipmentType.name || ''}
-                          onChange={e => setEditEquipmentType(ed => ({ ...ed, name: e.target.value }))}
-                          style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #bbb' }}
-                        />
-                      ) : (
-                        type.name
-                      )}
-                    </td>
-                    <td style={{ padding: 10 }}>
-                      {isEditing ? (
-                        <select
-                          value={editEquipmentType.level || type.level}
-                          onChange={e => setEditEquipmentType(ed => ({ ...ed, level: Number(e.target.value) }))}
-                          style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', minWidth: 100 }}
-                        >
-                          {LEVELS.map(l => (
-                            <option key={l.value} value={l.value}>{l.label}</option>
-                          ))}
-                        </select>
-                      ) : (
-                        LEVELS.find(l => l.value === type.level)?.label || type.level
-                      )}
-                    </td>
-                    <td style={{ padding: 10 }}>
-                      {isEditing ? (
-                        <select
-                          value={editEquipmentType.parentId ?? type.parentId ?? ''}
-                          onChange={e => setEditEquipmentType(ed => ({ ...ed, parentId: e.target.value }))}
-                          style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', minWidth: 100 }}
-                        >
-                          <option value=''>None</option>
-                          {equipmentTypes
-                            .filter(t => t.id !== type.id && t.level === (editEquipmentType.level || type.level) - 1)
-                            .map(t => (
-                              <option key={t.id} value={t.id}>{t.name}</option>
-                            ))}
-                        </select>
-                      ) : (
-                        getTypeByLevel(equipmentTypes, type.parentId || '', type.level - 1)?.name || 'None'
-                      )}
-                    </td>
-                    <td style={{ padding: 10 }}>
+                    <td className="bg-[#242424] text-white p-3">{type.name}</td>
+                    <td className="bg-[#242424] text-white p-3">{LEVELS.find(l => l.value === type.level)?.label || type.level}</td>
+                    <td className="bg-[#242424] text-white p-3">{getTypeByLevel(equipmentTypes, type.parentId || '', type.level - 1)?.name || 'None'}</td>
+                    <td className="bg-[#242424] text-white p-3">
                       {isEditing ? (
                         <>
                           <button
                             onClick={saveEditEquipmentType}
-                            style={{ background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4, padding: '6px 14px', fontWeight: 600, fontSize: 16, cursor: 'pointer', marginRight: 8 }}
+                            className="w-[100px] bg-red-50"
                           >Save</button>
                           <button
                             onClick={() => { setEditingTypeId(null); setEditEquipmentType({}); }}
-                            style={{ background: '#888', color: '#fff', border: 'none', borderRadius: 4, padding: '6px 14px', fontWeight: 600, fontSize: 16, cursor: 'pointer' }}
+                            className="w-[100px] bg-gray-500"
                           >Cancel</button>
                         </>
                       ) : (
                         <>
                           <button
+                            className='w-[100px] bg-blue-300 mx-auto '
                             onClick={() => startEditEquipmentType(type)}
-                            style={{ marginRight: 8, background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4, padding: '6px 14px', cursor: 'pointer', fontWeight: 600 }}
                             title='Edit type'
                           >Edit</button>
                           <button
                             onClick={() => handleDeleteEquipmentType(type.id)}
                             disabled={deletingTypeId === type.id}
-                            style={{ background: '#d32f2f', color: '#fff', border: 'none', borderRadius: 4, padding: '6px 14px', cursor: 'pointer', fontWeight: 600 }}
+                            className="w-[100px] bg-red-500 mx-auto"
                             title='Delete type'
                           >{deletingTypeId === type.id ? 'Deleting...' : 'Delete'}</button>
                         </>
@@ -481,6 +455,41 @@ export default function EquipmentList() {
             )}
           </tbody>
         </table>
+        {/* Pagination controls */}
+        {totalTypesPages > 1 && (
+          <div className="flex justify-center items-center gap-2 mt-6">
+            <button
+              className="px-3 py-1 rounded bg-gray-700 text-white disabled:opacity-50"
+              onClick={() => setTypesPage(p => Math.max(1, p - 1))}
+              disabled={typesPage === 1}
+            >Prev</button>
+            {/* Previous range */}
+            <button
+              className="px-3 py-1 rounded bg-gray-300 text-gray-800"
+              onClick={() => setTypesPage(Math.max(1, currentRangeStart - PAGE_RANGE))}
+              disabled={currentRangeStart === 1}
+            >&lt;</button>
+            {/* Page numbers in current range */}
+            {Array.from({ length: currentRangeEnd - currentRangeStart + 1 }, (_, i) => currentRangeStart + i).map(pageNum => (
+              <button
+                key={pageNum}
+                className={`px-3 py-1 rounded ${typesPage === pageNum ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+                onClick={() => setTypesPage(pageNum)}
+              >{pageNum}</button>
+            ))}
+            {/* Next range */}
+            <button
+              className="px-3 py-1 rounded bg-gray-300 text-gray-800"
+              onClick={() => setTypesPage(Math.min(totalTypesPages, currentRangeStart + PAGE_RANGE))}
+              disabled={currentRangeEnd === totalTypesPages}
+            >&gt;</button>
+            <button
+              className="px-3 py-1 rounded bg-gray-700 text-white disabled:opacity-50"
+              onClick={() => setTypesPage(p => Math.min(totalTypesPages, p + 1))}
+              disabled={typesPage === totalTypesPages}
+            >Next</button>
+          </div>
+        )}
       </div>
     </div>
   );
