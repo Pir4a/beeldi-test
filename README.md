@@ -46,20 +46,20 @@ Exemples de type d'équipement :
 ## Mutations
 
     - [x] Créer un équipement : Validation des données
-    - [ ] Modifier un équipement : Mise à jour partielle ou complète des champs
-    - [ ] Supprimer un équipement : Suppression logique ou physique
+    - [x] Modifier un équipement : Mise à jour partielle ou complète des champs
+    - [x] Supprimer un équipement : Suppression logique ou physique
 
 ## Interface utilisateur
 
     - [ ] Lister les équipements :
-        - [ ] Tableau d'équipements avec les colonnes : nom, domaine, type, catégorie, sous-catégorie, marque, modèle
+        - [x] Tableau d'équipements avec les colonnes : nom, domaine, type, catégorie, sous-catégorie, marque, modèle
         - [ ] Filtrage par domaine, type, catégorie ou sous-catégorie
         - [ ] Recherche par marque/modèle
-    - [ ] Formulaire de création/édition :
-        - [ ] Sélection hiérarchique du type d'équipement (dropdowns en cascade)
-        - [ ] Champs marque et modèle (texte libre)
-        - [ ] Validation des données
-    - [ ] Supprimer un équipement :
+    - [x] Formulaire de création/édition :
+        - [x] Sélection hiérarchique du type d'équipement (dropdowns en cascade)
+        - [x] Champs marque et modèle (texte libre)
+        - [x] Validation des données
+    - [x] Supprimer un équipement :
         - [ ] Confirmation de la suppression
 
 ## Consignes techniques
