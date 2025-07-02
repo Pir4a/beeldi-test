@@ -7,7 +7,7 @@ const client = new Client({
   user: 'steph',
   host: 'localhost',
   database: 'BEELDI_TEST_DB',
-  password: 'groscaca',
+  password: 'MDPTEST',
   port: 5432,
 });
 
