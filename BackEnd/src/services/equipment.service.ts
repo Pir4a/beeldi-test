@@ -13,36 +13,9 @@ export interface EquipmentFilters {
 }
 
 export class EquipmentService {
-  // Récupérer tous les équipements avec filtres
-  async getAll(filters: EquipmentFilters = {}): Promise<EquipmentWithType[]> {
-    // Appliquer les filtres
-    const conditions: SQL[] = [];
-
-    if (filters.search) {
-      const searchConditions = [
-        ilike(equipments.name, `%${filters.search}%`),
-        ilike(equipments.brand, `%${filters.search}%`),
-        ilike(equipments.model, `%${filters.search}%`)
-      ].filter((c): c is SQL => c !== undefined);
-      if (searchConditions.length > 0) {
-        conditions.push();
-      }
-    }
-
-    if (filters.brand) {
-      const cond = ilike(equipments.brand, `%${filters.brand}%`);
-      if (cond) conditions.push(cond);
-    }
-
-    if (filters.model) {
-      const cond = ilike(equipments.model, `%${filters.model}%`);
-      if (cond) conditions.push(cond);
-    }
-
-    const whereCondition = conditions.length > 0 ? and(...conditions) : undefined;
-
+  // Récupérer tous les équipements 
+  async getAll(): Promise<EquipmentWithType[]> {
     const results = await db.query.equipments.findMany({
-      where: whereCondition,
       with: {
         equipmentType: true,
       },

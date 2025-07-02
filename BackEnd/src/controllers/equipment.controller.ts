@@ -8,7 +8,7 @@ export class EquipmentController {
   getAll = async (req: Request, res: Response) => {
     try {
       const filters = req.query;
-      const equipments = await this.equipmentService.getAll(filters);
+      const equipments = await this.equipmentService.getAll();
       res.json(equipments);
     } catch (error) {
       res.status(500).json({ error: 'Erreur lors de la récupération des équipements' });

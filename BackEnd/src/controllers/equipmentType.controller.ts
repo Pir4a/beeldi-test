@@ -136,25 +136,4 @@ export class EquipmentTypeController {
       res.status(500).json({ error: 'Erreur lors de la suppression du type d\'équipement' });
     }
   };
-
-  importFromCSV = async (req: Request, res: Response) => {
-    try {
-      const { csvData } = req.body;
-      
-      if (!csvData || !Array.isArray(csvData)) {
-        return res.status(400).json({ 
-          error: 'Données CSV manquantes ou invalides' 
-        });
-      }
-      
-      await this.equipmentTypeService.importFromCSV(csvData);
-      res.json({ message: 'Import réussi', imported: csvData.length });
-    } catch (error) {
-      console.error('Error importing CSV:', error);
-      res.status(500).json({ 
-        error: 'Erreur lors de l\'import CSV',
-        details: error instanceof Error ? error.message : 'Erreur inconnue'
-      });
-    }
-  };
 }
