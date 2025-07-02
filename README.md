@@ -10,7 +10,7 @@ Un équipement est défini par :
     - [x] Une marque (ex: Schindler, Thyssenkrupp, etc.)
     - [x] Un modèle
     - [x] Une date de création
-    - [ ] Une date de modification
+    - [x] Une date de modification
 
 Un type d'équipement est défini par :
 
@@ -54,30 +54,30 @@ Exemples de type d'équipement :
     - [ ] Lister les équipements :
         - [x] Tableau d'équipements avec les colonnes : nom, domaine, type, catégorie, sous-catégorie, marque, modèle
         - [x] Filtrage par domaine, type, catégorie ou sous-catégorie
-        - [ ] Recherche par marque/modèle
+        - [x] Recherche par marque/modèle
     - [x] Formulaire de création/édition :
         - [x] Sélection hiérarchique du type d'équipement (dropdowns en cascade)
         - [x] Champs marque et modèle (texte libre)
         - [x] Validation des données
     - [x] Supprimer un équipement :
-        - [ ] Confirmation de la suppression
+        - [x] Confirmation de la suppression
 
 ## Consignes techniques
 
     - [x] Langage : TypeScript
     - [x] Base de données : PostgreSQL
     - [x] Framework Frontend: React
-    - [ ] Architecture : Architecture monolithique simple avec base de données relationnelle
-    - [ ] Framework Backend: Express
-    - [ ] ORM: Drizzle
-    - [ ] Containerisation: Docker 
-    - [ ] Librairies: Tailwind pour l'instant
-    - [ ] Style: Libre
-    - [ ] Tests: Libre
-    - [ ] Documentation: Libre
-    - [ ] Conventions: Libre
+    - Architecture : Architecture monolithique simple avec base de données relationnelle
+    - Framework Backend: Express
+    - ORM: Drizzle
+    - Containerisation: Docker 
+    - Librairies: Tailwind pour l'instant
+    - Style: Libre
+    - Tests: Libre
+    - Documentation: Libre
+    - Conventions: Libre
 
-- [ ] Lors du briefing, nous discuterons des choix techniques et des motivations de ces choix.
+- Lors du briefing, nous discuterons des choix techniques et des motivations de ces choix.
 
 # Bonus
 
