@@ -103,10 +103,10 @@ export default function EquipmentList() {
         }
       }
       // Search by name or domain
-      const domainName = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 1)?.name || '';
+      
       return (
-        eq.name.toLowerCase().includes(search.toLowerCase()) ||
-        domainName.toLowerCase().includes(search.toLowerCase())
+      eq.brand && eq.brand.toLowerCase().includes(search.toLowerCase()) ||
+        eq.model && eq.model.toLowerCase().includes(search.toLowerCase())
       );
     });
   }, [equipments, equipmentTypes, filters, search]);
