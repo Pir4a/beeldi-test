@@ -1,4 +1,9 @@
 # beeldi-test
+Beeldi Test - Gestion d'inventaire d'équipements
+
+Objectif du projet
+
+Ce projet a pour but de développer une application web permettant de gérer un inventaire d'équipements, avec une interface utilisateur moderne et un backend performant, tout en respectant les consignes techniques du test.
 
 - [x] L'application doit permettre de gérer un inventaire d'équipements.
 
@@ -71,7 +76,7 @@ Exemples de type d'équipement :
     - Framework Backend: Express
     - ORM: Drizzle
     - Containerisation: Docker 
-    - Librairies: Tailwind pour l'instant
+    - Librairies: Tailwind 
     - Style: Libre
     - Tests: Libre
     - Documentation: Libre
