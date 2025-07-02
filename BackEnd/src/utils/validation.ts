@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const createEquipmentSchema = z.object({
   name: z.string().min(1, 'Le nom est requis').max(255),
-  equipmentTypeId: z.string().uuid('ID de type invalide').nullable(),
+  equipmentTypeId: z.string().uuid('ID de type invalide'),
   brand: z.string().max(255).optional(),
   model: z.string().max(255).optional(),
   description: z.string().optional(),

@@ -86,6 +86,48 @@ export default function EquipmentList() {
   }, [equipmentTypes, typesPage]);
   const totalTypesPages = Math.ceil(equipmentTypes.length / TYPES_PER_PAGE);
 
+  // Filtered equipment list
+  const filteredEquipments = useMemo(() => {
+    return equipments.filter((eq) => {
+      // Get the type chain for this equipment
+      const typeChain: Record<number, string> = {};
+      let current = equipmentTypes.find((t) => t.id === eq.equipmentTypeId);
+      while (current) {
+        typeChain[current.level] = current.id;
+        current = equipmentTypes.find((t) => t.id === current?.parentId);
+      }
+      // Apply filters
+      for (let level = 1; level <= 4; level++) {
+        if (filters[level] && typeChain[level] !== filters[level]) {
+          return false;
+        }
+      }
+      // Search by name or domain
+      const domainName = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 1)?.name || '';
+      return (
+        eq.name.toLowerCase().includes(search.toLowerCase()) ||
+        domainName.toLowerCase().includes(search.toLowerCase())
+      );
+    });
+  }, [equipments, equipmentTypes, filters, search]);
+
+  // equipment pagination (must be after filteredEquipments)
+  const [equipPage, setEquipPage] = useState(1);
+  const EQUIP_PER_PAGE = 5;
+  const paginatedEquipments = useMemo(() => {
+    const start = (equipPage - 1) * EQUIP_PER_PAGE;
+    return filteredEquipments.slice(start, start + EQUIP_PER_PAGE);
+  }, [filteredEquipments, equipPage]);
+  const totalEquipPages = Math.ceil(filteredEquipments.length / EQUIP_PER_PAGE);
+  const EQUIP_PAGE_RANGE = 5;
+  const currentEquipRangeStart = Math.floor((equipPage - 1) / EQUIP_PAGE_RANGE) * EQUIP_PAGE_RANGE + 1;
+  const currentEquipRangeEnd = Math.min(currentEquipRangeStart + EQUIP_PAGE_RANGE - 1, totalEquipPages);
+
+  // Reset page when filters/search change
+  React.useEffect(() => {
+    setEquipPage(1);
+  }, [filters, search]);
+
   // Calculate page range for pagination (5 at a time)
   const PAGE_RANGE = 5;
   const currentRangeStart = Math.floor((typesPage - 1) / PAGE_RANGE) * PAGE_RANGE + 1;
@@ -156,31 +198,6 @@ export default function EquipmentList() {
     window.location.reload();
   };
 
-  // Filtered equipment list
-  const filteredEquipments = useMemo(() => {
-    return equipments.filter((eq) => {
-      // Get the type chain for this equipment
-      const typeChain: Record<number, string> = {};
-      let current = equipmentTypes.find((t) => t.id === eq.equipmentTypeId);
-      while (current) {
-        typeChain[current.level] = current.id;
-        current = equipmentTypes.find((t) => t.id === current?.parentId);
-      }
-      // Apply filters
-      for (let level = 1; level <= 4; level++) {
-        if (filters[level] && typeChain[level] !== filters[level]) {
-          return false;
-        }
-      }
-      // Search by name or domain
-      const domainName = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 1)?.name || '';
-      return (
-        eq.name.toLowerCase().includes(search.toLowerCase()) ||
-        domainName.toLowerCase().includes(search.toLowerCase())
-      );
-    });
-  }, [equipments, equipmentTypes, filters, search]);
-
   // Options for each filter
   const filterOptions: Record<number, EquipmentType[]> = useMemo(() => {
     const options: Record<number, EquipmentType[]> = { 1: [], 2: [], 3: [], 4: [] };
@@ -239,24 +256,24 @@ export default function EquipmentList() {
             </tr>
           </thead>
           <tbody>
-            {filteredEquipments.length === 0 ? (
+            {paginatedEquipments.length === 0 ? (
               <tr>
                 <td
                  className=' col-span-9 text-center p-6 color-[#888]'
                  >No equipments found.</td>
               </tr>
             ) : (
-              filteredEquipments.map((eq) => {
+              paginatedEquipments.map((eq) => {
                 const domain = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 1)?.name || '';
                 const type = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 2)?.name || '';
                 const categorie = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 3)?.name || '';
                 const sousCategorie = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 4)?.name || '';
                 return (
-                  <tr key={eq.id} className="border-b border-[#eee] transition-colors duration-200">
-                    <td className="bg-[#242424] text-white p-3">{eq.name}</td>
+                  <tr key={eq.id} className="border-b  border-[#eee] transition-colors duration-200">
+                    <td className="bg-[#242424]  text-white p-3">{eq.name}</td>
                     <td className="bg-[#242424] text-white p-3">{eq.model || '-'}</td>
                     <td className="bg-[#242424] text-white p-3">{eq.brand || '-'}</td>
-                    <td className="bg-[#242424] text-white p-3">{eq.description || '-'}</td>
+                    <td className="bg-[#242424] max-w-[200px] overflow-scroll text-white p-3">{eq.description || '-'}</td>
                     <td className="bg-[#242424] text-white p-3">{domain}</td>
                     <td className="bg-[#242424] text-white p-3">{type}</td>
                     <td className="bg-[#242424] text-white p-3">{categorie}</td>
@@ -281,6 +298,39 @@ export default function EquipmentList() {
           </tbody>
         </table>
       </div>
+
+      {/* Equipments Pagination Controls */}
+      {totalEquipPages > 1 && (
+        <div className="flex justify-center items-center gap-2 mt-6">
+          <button
+            className="px-3 py-1 rounded bg-gray-700 text-white disabled:opacity-50"
+            onClick={() => setEquipPage(p => Math.max(1, p - 1))}
+            disabled={equipPage === 1}
+          >Prev</button>
+          <button
+            className="px-3 py-1 rounded bg-gray-300 text-gray-800"
+            onClick={() => setEquipPage(Math.max(1, currentEquipRangeStart - EQUIP_PAGE_RANGE))}
+            disabled={currentEquipRangeStart === 1}
+          >&lt;</button>
+          {Array.from({ length: currentEquipRangeEnd - currentEquipRangeStart + 1 }, (_, i) => currentEquipRangeStart + i).map(pageNum => (
+            <button
+              key={pageNum}
+              className={`px-3 py-1 rounded ${equipPage === pageNum ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+              onClick={() => setEquipPage(pageNum)}
+            >{pageNum}</button>
+          ))}
+          <button
+            className="px-3 py-1 rounded bg-gray-300 text-gray-800"
+            onClick={() => setEquipPage(Math.min(totalEquipPages, currentEquipRangeStart + EQUIP_PAGE_RANGE))}
+            disabled={currentEquipRangeEnd === totalEquipPages}
+          >&gt;</button>
+          <button
+            className="px-3 py-1 rounded bg-gray-700 text-white disabled:opacity-50"
+            onClick={() => setEquipPage(p => Math.min(totalEquipPages, p + 1))}
+            disabled={equipPage === totalEquipPages}
+          >Next</button>
+        </div>
+      )}
 
       {/* Edit Modal */}
       {showEditModal && modalEquipment && (
