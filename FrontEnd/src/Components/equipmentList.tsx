@@ -240,63 +240,55 @@ export default function EquipmentList() {
             className="p-1.5 rounded border border-gray-400 min-w-[180px]"
           />
         </div>
-      <div className='w-4/5 pt-8'>
-        <table className="w-full border-collapse text-base">
-          <thead>
-            <tr className="bg-[#242424] text-white font-semibold border-b border-gray-300">
-              <th className='p-2'>Name</th>
-              <th className='p-2'>Model</th>
-              <th className='p-2'>Brand</th>
-              <th className='p-2'>Description</th>
-              <th className='p-2'>Domaine</th>
-              <th className='p-2'>Type</th>
-              <th className='p-2'>Catégorie</th>
-              <th className='p-2'>Sous-catégorie</th>
-              <th className='p-2'>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedEquipments.length === 0 ? (
-              <tr>
-                <td
-                 className=' col-span-9 text-center p-6 color-[#888]'
-                 >No equipments found.</td>
-              </tr>
-            ) : (
-              paginatedEquipments.map((eq) => {
-                const domain = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 1)?.name || '';
-                const type = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 2)?.name || '';
-                const categorie = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 3)?.name || '';
-                const sousCategorie = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 4)?.name || '';
-                return (
-                  <tr key={eq.id} className="border-b  border-[#eee] transition-colors duration-200">
-                    <td className="bg-[#242424]  text-white p-3">{eq.name}</td>
-                    <td className="bg-[#242424] text-white p-3">{eq.model || '-'}</td>
-                    <td className="bg-[#242424] text-white p-3">{eq.brand || '-'}</td>
-                    <td className="bg-[#242424] max-w-[200px] overflow-scroll text-white p-3">{eq.description || '-'}</td>
-                    <td className="bg-[#242424] text-white p-3">{domain}</td>
-                    <td className="bg-[#242424] text-white p-3">{type}</td>
-                    <td className="bg-[#242424] text-white p-3">{categorie}</td>
-                    <td className="bg-[#242424] text-white p-3">{sousCategorie}</td>
-                    <td className="bg-[#242424] text-white p-3">
-                      <button
-                        onClick={() => openEditModal(eq)}
-                        className="w-24  border-none rounded mb-1 cursor-pointer font-semibold text-amber-200"
-                        title='Edit equipment'
-                      >Edit</button>
-                      <button
-                        onClick={() => handleDeleteEquipment(eq.id)}
-                        disabled={deletingId === eq.id}
-                        className="text-white w-24 border-none rounded cursor-pointer font-semibold"
-                        title='Delete equipment'
-                      >{deletingId === eq.id ? 'Deleting...' : 'Delete'}</button>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
+      <div className='w-full pt-8'>
+        {/* Grid-based table header */}
+        <div className="grid grid-cols-9 bg-[#242424] text-white font-semibold border-b border-gray-300">
+          <div className='p-2'>Name</div>
+          <div className='p-2'>Model</div>
+          <div className='p-2'>Brand</div>
+          <div className='p-2'>Description</div>
+          <div className='p-2'>Domaine</div>
+          <div className='p-2'>Type</div>
+          <div className='p-2'>Catégorie</div>
+          <div className='p-2'>Sous-catégorie</div>
+          <div className='p-2'>Actions</div>
+        </div>
+        {/* Grid-based table body */}
+        {paginatedEquipments.length === 0 ? (
+          <div className="col-span-9 text-center p-6 color-[#888]">No equipments found.</div>
+        ) : (
+          paginatedEquipments.map((eq) => {
+            const domain = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 1)?.name || '';
+            const type = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 2)?.name || '';
+            const categorie = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 3)?.name || '';
+            const sousCategorie = getTypeByLevel(equipmentTypes, eq.equipmentTypeId, 4)?.name || '';
+            return (
+              <div key={eq.id} className="grid grid-cols-9 border-b w-full max-h-[125px] overflow-scroll border-[#eee] transition-colors duration-200">
+                <div className="bg-[#242424]   text-white p-3 break-words whitespace-pre-line">{eq.name}</div>
+                <div className="bg-[#242424] text-white p-3 break-words whitespace-pre-line">{eq.model || '-'}</div>
+                <div className="bg-[#242424]  text-white p-3 break-words whitespace-pre-line">{eq.brand || '-'}</div>
+                <div className="bg-[#242424]  break-words whitespace-pre-line text-white p-3">{eq.description || '-'}</div>
+                <div className="bg-[#242424] text-white p-3 break-words whitespace-pre-line">{domain}</div>
+                <div className="bg-[#242424] text-white p-3 break-words whitespace-pre-line">{type}</div>
+                <div className="bg-[#242424] text-white p-3 break-words whitespace-pre-line">{categorie}</div>
+                <div className="bg-[#242424] text-white p-3 break-words whitespace-pre-line">{sousCategorie}</div>
+                <div className="bg-[#242424] text-white p-3 flex flex-col gap-1">
+                  <button
+                    onClick={() => openEditModal(eq)}
+                    className="w-24 border-none rounded mb-1 cursor-pointer font-semibold text-amber-200"
+                    title='Edit equipment'
+                  >Edit</button>
+                  <button
+                    onClick={() => handleDeleteEquipment(eq.id)}
+                    disabled={deletingId === eq.id}
+                    className="text-white w-24 border-none rounded cursor-pointer font-semibold"
+                    title='Delete equipment'
+                  >{deletingId === eq.id ? 'Deleting...' : 'Delete'}</button>
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
 
       {/* Equipments Pagination Controls */}
